@@ -15,6 +15,8 @@ public class Cat : MonoBehaviour
     private bool _facingLeft;
     private bool _isGrounded = true;
     private float _attackTime;
+    //private  groundTag;
+
 
     // ------------------------------------------------------------------------
     private void Update()
@@ -60,10 +62,20 @@ public class Cat : MonoBehaviour
         // STEP 1 -------------------------------------------------------------
         // Add code here to allow the player to pass through the underside of
         //      platforms.
-        // Check if the player is moving upwards, and if so, diable their
+        // Check if the player is moving upwards, and if so, disable their
         //      collider.
         // You might want to check the Rigidbody2D scripting documentation
         //      for a useful variable :)
+        
+        if (_isGrounded == false && _rigidbody.linearVelocity.y > 0)
+        {
+            _collider.isTrigger = true;
+            Debug.Log("disabled collisions!");
+        }
+        else
+        {
+            _collider.isTrigger = false;
+        }
         
 
         
@@ -76,6 +88,7 @@ public class Cat : MonoBehaviour
         string tag = collision.gameObject.tag;
         if (tag.Equals("Ground") || tag.Equals("Platform"))
         {
+            Debug.Log("collisions work again");
             _isGrounded = true;
         }
     }
